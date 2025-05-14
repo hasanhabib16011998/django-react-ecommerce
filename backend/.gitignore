@@ -1,0 +1,73 @@
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+
+# Django-specific files
+*.log
+*.pot
+*.mo
+#db.sqlite3
+#db.sqlite3-journal
+instance/
+media/
+staticfiles/
+.static_storage/
+.live/
+
+# If you are using Django Debug Toolbar
+debug_toolbar/
+
+# Environments
+.env
+*.env
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*~
+*.sublime-project
+*.sublime-workspace
+
+# macOS files
+.DS_Store
+
+# Test Coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# MyPy
+.mypy_cache/
+
+# Pyre
+.pyre/
+
+# Pytest
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Bandit
+.bandit/
+
+# Local settings
+settings_local.py
+settings_local.yaml
