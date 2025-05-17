@@ -76,3 +76,8 @@
 .card-rating {
     color: #ffcc00;
 }
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}

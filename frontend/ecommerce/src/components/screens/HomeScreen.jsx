@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css/HomeScreen.css';
+import Rating from '../Rating';
+import { Link } from 'react-router-dom';
 
 function HomeScreen() {
     const [products, setProducts] = useState([]);
@@ -18,6 +20,7 @@ function HomeScreen() {
             <h1 className="title">Products</h1>
             <div className="card-grid">
                 {products.map((product) => (
+                  <Link to={`/product/${product._id}`} key={product._id} className="card-link">
                     <div key={product._id} className="card">
                         <img src={product.image} alt={product.productname} className="card-image" />
                         <div className="card-body">
@@ -26,10 +29,13 @@ function HomeScreen() {
                             <p className="card-info">{product.productinfo}</p>
                             <div className="card-footer">
                                 <span className="card-price">${product.price}</span>
-                                <span className="card-rating">⭐ {product.rating}</span>
+                                <span className="card-rating">
+                                <Rating value={product.rating} color="#ffcc00" text={`${product.rating} out of 5`} />
+                                </span>
                             </div>
                         </div>
                     </div>
+                  </Link>
                 ))}
             </div>
         </div>

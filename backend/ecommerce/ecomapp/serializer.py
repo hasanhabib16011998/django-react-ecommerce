@@ -10,3 +10,13 @@ class ProductsSerializer(serializers.ModelSerializer):
         if obj.image:
             return request.build_absolute_uri(obj.image.url)
         return None
+    
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Products
+        fields='__all__'
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
