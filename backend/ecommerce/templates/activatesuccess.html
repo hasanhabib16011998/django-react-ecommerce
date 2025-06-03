@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Verified</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #f9fafb;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .verified-container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1.5px 4px rgba(0,0,0,0.03);
+            padding: 2.5rem 2rem;
+            width: 100%;
+            max-width: 370px;
+            text-align: center;
+        }
+        .success-checkmark {
+            font-size: 56px;
+            color: #4BB543;
+            margin-bottom: 12px;
+        }
+        .verified-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #22223b;
+        }
+        .verified-message {
+            color: #444;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+        .home-btn {
+            background: #4BB543;
+            color: #fff;
+            padding: 0.8em 2.2em;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .home-btn:hover {
+            background: #368d2c;
+        }
+        @media (max-width: 480px) {
+            .verified-container {
+                padding: 1.5rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="verified-container">
+        <div class="success-checkmark">&#10004;</div>
+        <div class="verified-title">Email Verified!</div>
+        <div class="verified-message">
+            Your email has been successfully verified.<br>
+            You can now log in and start using your account.
+        </div>
+        <a href="" class="home-btn">Go to Login</a>
+    </div>
+</body>
+</html>

@@ -26,7 +26,11 @@ function HomeScreen() {
                         <div className="card-body">
                             <h2 className="card-title">{product.productname}</h2>
                             <p className="card-category">{product.productcategory}</p>
-                            <p className="card-info">{product.productinfo}</p>
+                            <p className="card-info">
+                            {product.productinfo.length > 100
+                                ? product.productinfo.slice(0, 300) + '...'
+                                : product.productinfo}
+                            </p>
                             <div className="card-footer">
                                 <span className="card-price">${product.price}</span>
                                 <span className="card-rating">

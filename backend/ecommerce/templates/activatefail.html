@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Verification Failed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #f9fafb;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .failed-container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1.5px 4px rgba(0,0,0,0.03);
+            padding: 2.5rem 2rem;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        .failed-mark {
+            font-size: 56px;
+            color: #e63946;
+            margin-bottom: 12px;
+        }
+        .failed-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #22223b;
+        }
+        .failed-message {
+            color: #444;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+        .home-btn, .retry-btn {
+            background: #e63946;
+            color: #fff;
+            padding: 0.8em 2.2em;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+            margin: 0 0.3em;
+        }
+        .home-btn:hover, .retry-btn:hover {
+            background: #b71c1c;
+        }
+        @media (max-width: 480px) {
+            .failed-container {
+                padding: 1.5rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="failed-container">
+        <div class="failed-mark">&#10060;</div>
+        <div class="failed-title">Verification Failed</div>
+        <div class="failed-message">
+            Sorry, we couldn't verify your email.<br>
+            The verification link may have expired or is invalid.<br>
+            Please try again or request a new verification email.
+        </div>
+        <a href="" class="home-btn">Go to Login</a>
+        <a href="" class="retry-btn">Resend Verification</a>
+    </div>
+</body>
+</html>

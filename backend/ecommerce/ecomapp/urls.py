@@ -8,5 +8,7 @@ urlpatterns = [
     path('products/<int:pk>',views.getProduct,name='getProduct'),
     path('users/login/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('users/profile/',views.getUserProfile,name='getUserProfile'),
-    path('users/',views.getUsers,name='getUsers')
+    path('users/',views.getUsers,name='getUsers'),
+    path('users/register/', views.registerUser, name='registerUser'),
+    path('activate/<uidb64>/<token>',views.ActivateAccountView.as_view(),name='activate')
 ]
