@@ -4,10 +4,12 @@ import axios from "axios";
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
     async () => {
-        const response = await axios.get('http://127.0.0.1:8000/api/products/');
-
-        if (!response.ok) throw new Error('Fetch Product Failed');
-        return await response.json();
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/products/');
+            return response.data;
+        } catch (error) {
+            throw new Error(error.response?.data?.detail || "Fetch Product Failed");
+        }
     }
 );
 

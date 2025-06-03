@@ -25,7 +25,7 @@ function Header() {
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
                 <Nav.Link as={Link} to="/" className="navbar-link active">
-                  <i class="fa-solid fa-house"></i>
+                  <i className="fa-solid fa-house"></i>
                   Home
                 </Nav.Link>
               </li>

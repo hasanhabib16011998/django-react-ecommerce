@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import '../css/HomeScreen.css';
 import Rating from '../Rating';
 import { Link } from 'react-router-dom';
