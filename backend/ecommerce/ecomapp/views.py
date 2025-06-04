@@ -15,7 +15,7 @@ from rest_framework import status
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from .utils import TokenGenerator, generate_token
-from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError,force_str
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.views.generic import View
@@ -83,7 +83,7 @@ def registerUser(request):
         )
         #print(message)
         email_message=EmailMessage(email_subject,message,settings.EMAIL_HOST_USER,[data['email']])
-        #email_message.send()
+        email_message.send()
         serialize = UserSerializerWithToken(user,many=False)
         return Response(serialize.data)
     except Exception as e:
@@ -95,8 +95,10 @@ def registerUser(request):
 class ActivateAccountView(View):
     def get(self, request, uidb64, token):
         try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            print(uid)
             user = User.objects.get(pk=uid)
+            print("user:", user)
         except Exception as identifier:
             user = None
         if user is not None and generate_token.check_token(user, token):

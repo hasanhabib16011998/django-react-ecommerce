@@ -1,8 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../app/loginSlice';
+
 
 function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userInfo = useSelector(state=>state.login.userInfo);
+  console.log(userInfo);
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login'); // Or navigate('/') if you want to go to home
+  };
   return (
     <>
       <Navbar className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -34,7 +45,27 @@ function Header() {
                   Cart
                 </Nav.Link>
               </li>
-              <li className="nav-item dropdown">
+
+              { userInfo? (
+                <li className="nav-item dropdown">
+                <Nav.Link
+                  className="nav-link dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Welcome {userInfo.name}
+                </Nav.Link>
+                <div className="dropdown-menu">
+                  <Nav.Link as="span" className="dropdown-item" onClick={handleLogout}>
+                    Log Out
+                  </Nav.Link>
+                </div>
+              </li>
+
+              ):(
+                <li className="nav-item dropdown">
                 <Nav.Link
                   className="nav-link dropdown-toggle"
                   data-bs-toggle="dropdown"
@@ -51,12 +82,11 @@ function Header() {
                   <Nav.Link as={Link} to="/signup" className="dropdown-item">
                     Sign Up
                   </Nav.Link>
-                  <div className="dropdown-divider"></div>
-                  <Nav.Link as={Link} to="/logout" className="dropdown-item">
-                    Log Out
-                  </Nav.Link>
                 </div>
               </li>
+
+              )}
+
             </ul>
             <form className="d-flex">
               <input
