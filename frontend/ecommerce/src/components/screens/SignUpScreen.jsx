@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Form, Card, InputGroup } from 'react-bootstrap';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser, clearRegisterState } from '../../app/registerSlice';
 
 function SignUpScreen() {
   const [fname, setFname] = useState("");
@@ -11,54 +13,54 @@ function SignUpScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [localError, setLocalError] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // Regex patterns
+ // Redux state
+  const { loading, error, userInfo, success } = useSelector((state) => state.registerUser);
+  console.log(userInfo);
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // At least 5 characters, 1 digit, 1 lowercase, 1 uppercase, 1 special char from _ $ @ * ! . or .
   const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[_$@*!.\.]).{5,}$/;
+
+  useEffect(() => {
+    if (success && userInfo) {
+      dispatch(clearRegisterState());
+      navigate('/login');
+    }
+  }, [success, userInfo, navigate, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
+    setLocalError('');
 
     if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address.");
+      setLocalError("Please enter a valid email address.");
       return;
     }
 
     if (!passwordRegex.test(password)) {
-      setError(
+      setLocalError(
         "Password must be at least 5 characters and include at least one digit, one lowercase letter, one uppercase letter, and one special character (_ $ @ * ! .)."
       );
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setLocalError("Passwords do not match");
       return;
     }
-    if (
-      !fname ||
-      !lname ||
-      !email ||
-      !password ||
-      !confirmPassword
-    ) {
-      setError("Please fill out all fields");
+    if (!fname || !lname || !email || !password || !confirmPassword) {
+      setLocalError("Please fill out all fields");
       return;
     }
 
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/login');
-    }, 1000);
+    // Dispatch register thunk
+    dispatch(registerUser({ fname, lname, email, password }));
   };
+
 
   return (
     <>
@@ -72,7 +74,11 @@ function SignUpScreen() {
               </Card.Header>
               <Card.Body>
                 {loading && <Loader />}
-                {error && <div className="alert alert-danger">{error}</div>}
+                {(localError || error) && (
+                  <div className="alert alert-danger">
+                    {localError || error}
+                  </div>
+                )}
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3" controlId="fname">
                     <Form.Label>
@@ -131,7 +137,7 @@ function SignUpScreen() {
                         placeholder="Enter Password"
                         required
                         type={showPassword ? "text" : "password"}
-                        id="pass1"
+                        id="passinput1"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         isInvalid={password && !passwordRegex.test(password)}
@@ -156,7 +162,7 @@ function SignUpScreen() {
                         placeholder="Confirm your Password"
                         required
                         type={showConfirmPassword ? "text" : "password"}
-                        id="pass2"
+                        id="passinput2"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         isInvalid={confirmPassword && password !== confirmPassword}

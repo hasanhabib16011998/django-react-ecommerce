@@ -83,7 +83,7 @@ def registerUser(request):
         )
         #print(message)
         email_message=EmailMessage(email_subject,message,settings.EMAIL_HOST_USER,[data['email']])
-        email_message.send()
+        #email_message.send()
         serialize = UserSerializerWithToken(user,many=False)
         return Response(serialize.data)
     except Exception as e:

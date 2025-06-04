@@ -1,32 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Card, InputGroup } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser,clearLoginState } from '../../app/loginSlice';
 
 function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [localError, setLocalError] = useState('');
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Redux state
+  const { loading, error, userInfo, success } = useSelector((state) => state.login);
+
+  useEffect(() => {
+    if (success && userInfo) {
+      dispatch(clearLoginState());
+      navigate('/'); // Redirect after login
+    }
+  }, [success, userInfo, navigate, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
+    setLocalError('');
 
     if (!email || !password) {
-      setError("Please fill out all fields");
+      setLocalError("Please fill out all fields");
       return;
     }
 
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/'); // Redirect after login
-    }, 1000);
+    // Note: API expects "username" key, not "email"
+    dispatch(loginUser({ username: email, password }));
   };
 
   return (
@@ -41,7 +49,9 @@ function LoginScreen() {
               </Card.Header>
               <Card.Body>
                 {loading && <Loader />}
-                {error && <div className="alert alert-danger">{error}</div>}
+                {(localError || error) && (
+                  <div className="alert alert-danger">{localError || error}</div>
+                )}
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3" controlId="email">
                     <Form.Label>
@@ -96,4 +106,4 @@ function LoginScreen() {
   )
 }
 
-export default LoginScreen
+export default LoginScreen;
